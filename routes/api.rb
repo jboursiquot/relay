@@ -17,8 +17,8 @@ class App < Sinatra::Application
 
   post '/send' do
 
-    if (params[:token].nil? || params[:sender].nil? || params[:recipient].nil? || params[:subject].nil? || params[:body].nil?)
-      halt 400, {'Content-Type' => 'text/plain'}, 'Params token, sender, recipient, subject and body are required'
+    if (params[:token].nil? || params[:sender].nil? || params[:recipients].nil? || params[:subject].nil? || params[:body].nil?)
+      halt 400, {'Content-Type' => 'text/plain'}, 'Params token, sender, recipients, subject and body are required'
     end
 
     if (!params[:token].eql? settings.valid_token)
@@ -28,12 +28,14 @@ class App < Sinatra::Application
     params.each_pair {|k, v| v.strip!}
 
     sender = params[:sender];
-    recipient = params[:recipient]
+    recipients = params[:recipients].split(',')
     subject = params[:subject]
     body = params[:body]
     body_plain = params[:body_plain] unless params[:body_plain].nil?
 
-    Mailer.send sender, recipient, subject, body, body_plain
+    recipients.each do |recipient|
+      Mailer.send sender, recipient, subject, body, body_plain
+    end
 
     status 200
     headers 'Content-Type' => 'application/json'
