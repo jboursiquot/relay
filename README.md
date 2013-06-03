@@ -21,14 +21,14 @@ A *token* parameter must be sent it with requests which
 
 | METHOD | URL   | PARAMS                                              | DESCRIPTION                                        |
 | ------ | ---   | ------                                              | -----------                                        |
-| POST   | /send | token, sender, recipient, subject, body             | Submits an email                                   |
-| POST   | /send | token, sender, recipient, subject, body, body_plain | Submits an email with a plain alternative included |
+| POST   | /send | token, sender, recipients, subject, body             | Submits an email                                   |
+| POST   | /send | token, sender, recipients, subject, body, body_plain | Submits an email with a plain alternative included |
 
 ## Example Request/Response
 
 ```
 curl -v -d
-"token=test&sender=john@gmail.com&recipient=jane@gmail.com&subject=Test&body=Body"
+"token=test&sender=john@gmail.com&recipients=jane@gmail.com&subject=Test&body=Body"
 localhost:5000/send
 ```
 
@@ -55,7 +55,7 @@ localhost:5000/send
 <
 * Closing connection #0
 *
-{"token":"test","sender":"john@gmail.com","recipient":"jane@gmail.com","subject":"Test","body":"Body"}
+{"token":"test","sender":"john@gmail.com","recipients":"jane@gmail.com","subject":"Test","body":"Body"}
 ```
 
 A successfully processed response will include the parameters you sent
@@ -65,7 +65,7 @@ in:
 {
   "token":"test",
   "sender":"john@gmail.com",
-  "recipient":"jane@gmail.com",
+  "recipients":"jane@gmail.com",
   "subject":"Test",
   "body":"Body"
 }
