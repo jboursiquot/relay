@@ -68,6 +68,26 @@ describe "API" do
       last_result['body_plain'].must_match /Test body plain/
     end
 
+    it "should process CC's for multiple recipients" do
+      post '/send', params={token: ENV['RELAY_TOKEN'],
+                            sender: 'john@domain.com',
+                            recipients: 'jane@domain.com,fred@domain.com,jack@domain.com',
+                            cc: 'manager@domain.com',
+                            subject: 'Test subject',
+                            body: 'Test body',
+                            body_plain: 'Test body plain'}
+      last_response.status.must_equal(200, 'Expected status 200')
+      last_response.content_type.must_equal("application/json", "Content type not application/json")
+      last_result = JSON.parse(last_response.body)
+      last_result.must_be_instance_of Hash
+      last_result['sender'].must_match /john@domain.com/
+      last_result['recipients'].must_match /jane@domain.com,fred@domain.com,jack@domain.com/
+      last_result['cc'].must_match /manager@domain.com/
+      last_result['subject'].must_match /Test subject/
+      last_result['body'].must_match /Test body/
+      last_result['body_plain'].must_match /Test body plain/
+    end
+
   end
 
 end

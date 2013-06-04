@@ -19,10 +19,11 @@ A *token* parameter must be sent it with requests which
 
 ## Usage
 
-| METHOD | URL   | PARAMS                                              | DESCRIPTION                                        |
-| ------ | ---   | ------                                              | -----------                                        |
+| METHOD | URL   | PARAMS                                               | DESCRIPTION                                        |
+| ------ | ---   | ------                                               | -----------                                        |
 | POST   | /send | token, sender, recipients, subject, body             | Submits an email                                   |
 | POST   | /send | token, sender, recipients, subject, body, body_plain | Submits an email with a plain alternative included |
+| POST   | /send | token, sender, recipients, cc, subject, body         | Submits an email with a CC                         |
 
 ## Example Request/Response
 
@@ -70,6 +71,9 @@ in:
   "body":"Body"
 }
 ```
+
+You can have multiple email addresses passed in for *recipients* as well
+as *cc* params.
 
 ## Deployment
 *Relay* is a Sinatra-based Ruby application that can easilily be hosted
