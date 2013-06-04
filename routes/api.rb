@@ -30,11 +30,12 @@ class App < Sinatra::Application
     sender = params[:sender];
     recipients = params[:recipients].split(',')
     subject = params[:subject]
+    cc = params[:cc]
     body = params[:body]
     body_plain = params[:body_plain] unless params[:body_plain].nil?
 
     recipients.each do |recipient|
-      Mailer.send sender, recipient, subject, body, body_plain
+      Mailer.send sender, recipient, cc, subject, body, body_plain
     end
 
     status 200
