@@ -84,7 +84,7 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
-    yard (0.8.6.1)
+    yard (0.9.20)
 
 PLATFORMS
   ruby
